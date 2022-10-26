@@ -76,7 +76,7 @@ namespace EmployeeManagment.API.Controllers
                 {
                     return BadRequest();
                 }
-                var emp = employeeRepository.GetEmployeeByEmail(employee.Email);
+                var emp =await employeeRepository.GetEmployeeByEmail(employee.Email);
                 if (emp != null)
                 {
                     ModelState.AddModelError("Email", "EmailIdalready existing");
@@ -93,21 +93,22 @@ namespace EmployeeManagment.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee(int id, Employee employee)
+        [HttpPut]
+        public async Task<ActionResult<Employee>> UpdateEmployee(Employee employee)
         {
             try
             {
-                if (id != employee.EmployeeId)
-                {
-                    return BadRequest("Employee Id missmatch");
-                }
-                var emp = employeeRepository.GetEmployeeById(id);
+                //if (id != employee.EmployeeId)
+                //{
+                //    return BadRequest("Employee Id missmatch");
+                //}
+                var emp = employeeRepository.GetEmployeeById(employee.EmployeeId);
                 if (emp == null)
                 {
-                    return NotFound($"Employye Id = {id} not found");
+                    return NotFound($"Employye Id = {employee.EmployeeId} not found");
                 }
-                return await employeeRepository.UpdateEmployee(employee);
+                var res = await employeeRepository.UpdateEmployee(employee);
+                return res;
 
             }
             catch (Exception)

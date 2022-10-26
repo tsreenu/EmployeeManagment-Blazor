@@ -1,14 +1,9 @@
 ﻿using EmployeeManagment.Models.CustomValidators;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmployeeManagment.Models
 {
-    public class Employee
+    public class EditEmployeeModel
     {
         public int EmployeeId { get; set; }
 
@@ -18,8 +13,10 @@ namespace EmployeeManagment.Models
         [Required]
         public string LastName { get; set; }
         [EmailAddress]
-        [EmailDomainValidator(AllowedDomain ="gmail.com",ErrorMessage ="Only gmail.com domainis allowed.")]
+        [EmailDomainValidator(AllowedDomain = "gmail.com", ErrorMessage = "Only gmail.com domainis allowed.")]
         public string Email { get; set; }
+        [Compare("Email",ErrorMessage ="Email and Confirm Email is missmacthed.")]
+        public string ConfirmEmail { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
